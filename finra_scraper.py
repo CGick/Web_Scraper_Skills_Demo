@@ -5,9 +5,7 @@ from config import settings
 
 # AWS resources
 AWS_SESSION = Session(
-    region_name="us-east-1",
-    aws_access_key_id=settings.DEMO_ACCESS_KEY,
-    aws_secret_access_key=settings.DEMO_SECRET_ACCESS_KEY
+    region_name="us-east-1"
 )
 DYNAMODB = AWS_SESSION.resource('dynamodb')
 

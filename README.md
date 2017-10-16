@@ -9,12 +9,10 @@ registered users.
 
 This demo uses resources form Amazon Web Services.
 Users will be allowed to access these resources via the AWS Management
-Console by logging in under the temporary user credentials bellow.
+Console by logging in under the supplied temporary user credentials.
 
 * url: https://chrisgick.signin.aws.amazon.com/console
-* account_alias: `chrisgick`
-* user: `finra_scraper_user`
-* password: `Password1`
+
 
 ## Demo Flow
 1. Register and email with `register_email_address.py`
