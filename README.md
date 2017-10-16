@@ -17,6 +17,11 @@ Console by logging in under the temporary user credentials bellow.
 * password: `Password1`
 
 ## Demo Flow
+See an end to end demo with `run.py`
+
+### OR
+
+For a more granular view of the process:
 1. Register and email with `register_email_address.py`
 2. Scrape FINRA website with `finra_scraper.py`
 3. Send email alerts with `email_alerter.py`
