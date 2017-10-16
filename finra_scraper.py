@@ -71,7 +71,7 @@ def write_to_dynamodb(list_of_articles):
     return response_log
 
 
-def main():
+def scrape_finra():
     """
     Scrapes FINRA web site to gather newsroom articles and populate
     DynamoDB
@@ -84,4 +84,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    scrape_finra()
