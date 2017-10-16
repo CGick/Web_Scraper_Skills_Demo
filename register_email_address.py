@@ -4,7 +4,8 @@ from config import settings
 
 # AWS resources
 AWS_SESSION = Session(
-    region_name="us-east-1"
+    region_name="us-east-1",
+    profile_name="scraper_demo"
 )
 DYNAMODB = AWS_SESSION.resource('dynamodb')
 SES = AWS_SESSION.client('ses')
@@ -35,11 +36,11 @@ def verify_email(user):
 
     :param user: dictionary of user name and email address
     """
-    verify = SES.verify_email_identity(
+    SES.verify_email_identity(
         EmailAddress=user['email_address']
     )
     table = DYNAMODB.Table(settings.USERS_TABLE)
-    response = table.put_item(
+    table.put_item(
         Item={
             "email_address": user['email_address'],
             "name": user['name']

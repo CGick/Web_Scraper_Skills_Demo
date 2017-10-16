@@ -5,7 +5,8 @@ from config import settings
 
 # AWS resources
 AWS_SESSION = Session(
-    region_name="us-east-1"
+    region_name="us-east-1",
+    profile_name="scraper_demo"
 )
 DYNAMODB = AWS_SESSION.resource('dynamodb')
 

@@ -9,9 +9,27 @@ registered users.
 
 This demo uses resources form Amazon Web Services.
 Users will be allowed to access these resources via the AWS Management
-Console by logging in under the supplied temporary user credentials.
+Console by logging in under the supplied temporary user credentials
+at https://chrisgick.signin.aws.amazon.com/console.
 
-* url: https://chrisgick.signin.aws.amazon.com/console
+To allow the program access to these AWS resources
+add a profile to the `~/.aws/config` file with supplied
+credentials.
+
+    ```bash
+    [profile scraper_demo]
+    aws_access_key_id = <access_key>
+    aws_secret_access_key = <secret_access_key>
+    ```
+To allow access to the smtp server add the supplied smtp credentials
+to the settings file.
+
+    ```python
+    AWS_SMTP = {
+        "Username": "<smtp_username>",
+        "Password": "<smtp_password>"
+    }
+    ```
 
 
 ## Demo Flow
