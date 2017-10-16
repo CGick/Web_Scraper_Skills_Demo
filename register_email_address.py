@@ -2,8 +2,8 @@ from boto3.session import Session
 from boto3 import client
 
 # AWS resources
-demo_access_key = "AKIAITB7G536WCOBIHDA"
-demo_secret_access_key = "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"
+demo_access_key = "AKIAINA2XWXU5YCFGX4Q"
+demo_secret_access_key = "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"
 AWS_SESSION = Session(
     region_name="us-east-1",
     aws_access_key_id=demo_access_key,
