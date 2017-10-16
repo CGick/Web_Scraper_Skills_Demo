@@ -1,17 +1,15 @@
 from utils.web_scraper import Web_Scraper
 from bs4 import BeautifulSoup
 from boto3.session import Session
+from config import settings
 
 # AWS resources
-demo_access_key = "AKIAITB7G536WCOBIHDA"
-demo_secret_access_key = "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"
 AWS_SESSION = Session(
     region_name="us-east-1",
-    aws_access_key_id=demo_access_key,
-    aws_secret_access_key=demo_secret_access_key
+    aws_access_key_id=settings.DEMO_ACCESS_KEY,
+    aws_secret_access_key=settings.DEMO_SECRET_ACCESS_KEY
 )
 DYNAMODB = AWS_SESSION.resource('dynamodb')
-TABLE_NAME = "news_bulletin_archive"
 
 # Root site URL
 host = 'https://www.finra.org'
@@ -59,7 +57,7 @@ def write_to_dynamodb(list_of_articles):
     :param list_of_articles: list of dictionaries
     :return: list of responses from dynamodb put_item
     """
-    table = DYNAMODB.Table(TABLE_NAME)
+    table = DYNAMODB.Table(settings.NEWS_TABLE)
     response_log = []
     for item in list_of_articles:
         response = table.put_item(

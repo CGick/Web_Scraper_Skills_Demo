@@ -1,28 +1,21 @@
 import smtplib
+import datetime
+
 from email.mime.text import MIMEText
 from boto3.session import Session
 from fuzzyparsers import parse_date
-import datetime
+from config import settings
 
 
 # AWS resources
-demo_access_key = "AKIAITB7G536WCOBIHDA"
-demo_secret_access_key = "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"
 AWS_SESSION = Session(
     region_name="us-east-1",
-    aws_access_key_id=demo_access_key,
-    aws_secret_access_key=demo_secret_access_key
+    aws_access_key_id=settings.DEMO_ACCESS_KEY,
+    aws_secret_access_key=settings.DEMO_SECRET_ACCESS_KEY
 )
 DYNAMODB = AWS_SESSION.resource('dynamodb')
-NEWS_TABLE = "news_bulletin_archive"
-USERS_TABLE = "email_alert_users"
-AWS_SMTP = {
-    "Username": "AKIAJXTRDWPU47CQ4KPA",
-    "Password": "AhO4Zy7fvFyxmSIC0nNdxIJvQ9Q547zq0CMYz62AqTQq"
-}
 
-# Outbound Email address
-SENDER = "chrisgick31@gmail.com"
+
 
 def get_news_updates():
     """
@@ -31,7 +24,7 @@ def get_news_updates():
     :return: list of dictionaries containing news article headlines,
     date_posted, and links
     """
-    table = DYNAMODB.Table(NEWS_TABLE)
+    table = DYNAMODB.Table(settings.NEWS_TABLE)
     stories = table.scan()
     return stories["Items"]
 
@@ -76,7 +69,7 @@ def get_news_alert_users():
 
     :return: list of dictionaries of user names and email addresses
     """
-    table = DYNAMODB.Table(USERS_TABLE)
+    table = DYNAMODB.Table(settings.USERS_TABLE)
     users = table.scan()
     return users['Items']
 
@@ -102,13 +95,17 @@ def send_email(message, recipient):
 
     msg['Subject'] = "Gick Chris Skills Demo"
     msg['To'] = recipient['email_address']
-    msg['From'] = SENDER
+    msg['From'] = settings.OUTBOUND_EMAIL_ADDRESS
 
     s = smtplib.SMTP("email-smtp.us-east-1.amazonaws.com", 587)
     s.ehlo()
     s.starttls()
-    s.login(AWS_SMTP["Username"], AWS_SMTP["Password"])
-    s.sendmail(SENDER, [recipient['email_address']], msg.as_string())
+    s.login(settings.AWS_SMTP["Username"], settings.AWS_SMTP["Password"])
+    s.sendmail(
+        settings.OUTBOUND_EMAIL_ADDRESS,
+        [recipient['email_address']],
+        msg.as_string()
+    )
     s.close()
 
 

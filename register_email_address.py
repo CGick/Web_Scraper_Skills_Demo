@@ -1,17 +1,15 @@
 from boto3.session import Session
 from boto3 import client
+from config import settings
 
 # AWS resources
-demo_access_key = "AKIAINA2XWXU5YCFGX4Q"
-demo_secret_access_key = "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"
 AWS_SESSION = Session(
     region_name="us-east-1",
-    aws_access_key_id=demo_access_key,
-    aws_secret_access_key=demo_secret_access_key
+    aws_access_key_id=settings.DEMO_ACCESS_KEY,
+    aws_secret_access_key=settings.DEMO_SECRET_ACCESS_KEY
 )
 DYNAMODB = AWS_SESSION.resource('dynamodb')
 SES = AWS_SESSION.client('ses')
-USERS_TABLE = "email_alert_users"
 
 
 
@@ -42,7 +40,7 @@ def verify_email(user):
     verify = SES.verify_email_identity(
         EmailAddress=user['email_address']
     )
-    table = DYNAMODB.Table(USERS_TABLE)
+    table = DYNAMODB.Table(settings.USERS_TABLE)
     response = table.put_item(
         Item={
             "email_address": user['email_address'],
